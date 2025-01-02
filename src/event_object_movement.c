@@ -202,12 +202,7 @@ static const struct ObjectEventGraphicsInfo *SpeciesToGraphicsInfo(u16 species, 
 static bool8 NpcTakeStep(struct Sprite *);
 static bool8 IsElevationMismatchAt(u8, s16, s16);
 static bool8 AreElevationsCompatible(u8, u8);
-// static void CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(u16 graphicsId, u16 movementType, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
-// static void oamt_npc_ministep_reset(struct Sprite *, u8, u8);
-// static void UpdateObjectEventSpriteSubpriorityAndVisibility(struct Sprite *);
-// static void InitSpriteForFigure8Anim(struct Sprite *sprite);
-// static bool8 AnimateSpriteInFigure8(struct Sprite *sprite);
-// static void UpdateObjectEventSprite(struct Sprite *);
+static void CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(u16 graphicsId, u16 movementType, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
 static bool8 DoesObjectCollideWithObjectAtZ(struct ObjectEvent *, s16, s16);
 
 static const struct SpriteFrameImage sPicTable_PechaBerryTree[];
@@ -11062,17 +11057,23 @@ bool8 MovementActionFunc_RunSlow_Step1(struct ObjectEvent *objectEvent, struct S
     }
     return FALSE;
 }
+
 u8 CheckCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir, u8 currentElevation)
 {
     u8 direction = dir;
-    if (MapGridIsImpassableAt(x, y) || GetMapBorderIdAt(x, y) == -1 || IsMetatileDirectionallyImpassable(objectEvent, x, y, direction))
+
+    if (MapGridGetCollisionAt(x, y) || GetMapBorderIdAt(x, y) == -1 || IsMetatileDirectionallyImpassable(objectEvent, x, y, direction))
         return COLLISION_IMPASSABLE;
+
     else if (objectEvent->trackedByCamera && !CanCameraMoveInDirection(direction))
         return COLLISION_IMPASSABLE;
-    else if (IsZCoordMismatchAt(currentElevation, x, y))
+
+    else if (IsElevationMismatchAt(objectEvent->currentElevation, x, y))
         return COLLISION_ELEVATION_MISMATCH;
-    else if (DoesObjectCollideWithObjectAtZ(objectEvent, x, y))
+
+    else if (DoesObjectCollideWithObjectAt(objectEvent, x, y))
         return COLLISION_OBJECT_EVENT;
+
     return COLLISION_NONE;
 }
 

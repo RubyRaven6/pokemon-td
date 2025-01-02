@@ -2,7 +2,7 @@
 #define GUARD_MOVEMENT_PATH_PLANNING_H
 #include "event_object_movement.h"
 #include "malloc.h"
-#include "gba/types.h"
+#include "global.h"
 
 
 static const struct Coords16 moves[] = 
@@ -172,7 +172,7 @@ struct Node pop(struct PriorityQueue *queue, int i) {
 
 u8 getElevation(u8 prevZ, s16 x, s16 y){
   u8 mapZ;
-  mapZ = MapGridGetZCoordAt(x+7, y+7);
+  mapZ = MapGridGetElevationAt(x+7, y+7);
   if (mapZ == 0xF)
     return prevZ;
   else
