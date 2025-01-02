@@ -2440,20 +2440,23 @@
 
 	@ Perform the pathfinding at movements to the specified (index) Object. Also closes any standard message boxes that are still open.
 	@ If no map is specified, then the current map is used.
-	.macro moveobjecttopos index:req, posx:req, posy:req, facing:req, map
+	@ OBJECT_ID: The ID of the object (same as applymovement)
+	@ X and Y: the goal position
+	@FACING: The orientation of the ObjectEvent at the end of the movement (0: down, 1: up, 2: left, 3: right)
+	.macro moveobjecttopos index:req, targetx:req, targety:req, targetfacing:req, map
 		.ifb \map
 			callnative ScrCmd_MoveObjectToPos
 			.2byte \index
-			.2byte \posx
-			.2byte \posy
-			.2byte \facing
+			.2byte \targetx 
+			.2byte \targety
+			.2byte \targetfacing
 		.else
 			@ Really only useful if the object has followed from one map to another (e.g. Wally during the catching event).
 			callnative ScrCmd_MoveObjectToPos_at
 			.2byte \index
-			.2byte \posx
-			.2byte \posy
-			.2byte \facing
+			.2byte \targetx
+			.2byte \targety
+			.2byte \targetfacing
 			map \map
 		.endif
 	.endm

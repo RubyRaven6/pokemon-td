@@ -124,6 +124,5 @@ void MovementPathPlanning_MoveObjectToPos(u8 localId, u8 mapNum, u8 mapGroup, u8
         }
     }
    
-
 }
 
