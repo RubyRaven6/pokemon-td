@@ -2442,14 +2442,14 @@
 	@ If no map is specified, then the current map is used.
 	.macro moveobjecttopos index:req, posx:req, posy:req, facing:req, map
 		.ifb \map
-			.byte 0xe3
+			callnative ScrCmd_MoveObjectToPos
 			.2byte \index
 			.2byte \posx
 			.2byte \posy
 			.2byte \facing
 		.else
 			@ Really only useful if the object has followed from one map to another (e.g. Wally during the catching event).
-			.byte 0xe4
+			callnative ScrCmd_MoveObjectToPos_at
 			.2byte \index
 			.2byte \posx
 			.2byte \posy
