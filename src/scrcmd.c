@@ -2552,12 +2552,13 @@ bool8 Scrcmd_getobjectfacingdirection(struct ScriptContext *ctx)
 
 bool8 ScrCmd_MoveObjectToPos(struct ScriptContext *ctx)
 {
-    u16 localId = VarGet(ScriptReadHalfword(ctx));
-    u16 posX = VarGet(ScriptReadHalfword(ctx));
-    u16 posY = VarGet(ScriptReadHalfword(ctx));
-    u16 facing = VarGet(ScriptReadHalfword(ctx));
 
-    MovementPathPlanning_MoveObjectToPos(localId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, posX,posY,facing);
+    u8 localId = VarGet(ScriptReadHalfword(ctx));
+    u8 posX = VarGet(ScriptReadHalfword(ctx));
+    u8 posY = VarGet(ScriptReadHalfword(ctx));
+    u8 facing = VarGet(ScriptReadHalfword(ctx));
+
+    MovementPathPlanning_MoveObjectToPos(localId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, posX, posY,facing);
     // sMovingNpcId = localId;
     return FALSE;
 }

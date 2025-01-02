@@ -1,0 +1,43 @@
+mapscripts NewMap1_MapScripts{
+
+}
+
+script EventScript_PickMovements{
+    dynmultichoice(5, 2, TRUE, 2, 1, DYN_MULTICHOICE_CB_NONE, "Test 1", "Test 2", "Test 3", "Test 4")
+    switch(var(VAR_RESULT)){
+        case 0:
+            call(MovementTest_3)
+            end
+        case 1:
+            call(MovementTest_4)
+            end
+        case 2:
+            //call(MovementTest_3)
+            end
+        case 3:
+            //call(MovementTest_4)
+            end
+    }
+}
+
+script MovementTest_1{
+    getobjectxy(2, CURRENT_POSITION, VAR_TEMP_0, VAR_TEMP_1)
+    moveobjecttopos(1, VAR_TEMP_0, VAR_TEMP_1, 0)
+    return
+}
+
+script MovementTest_2{
+    getobjectxy(OBJ_EVENT_ID_PLAYER, CURRENT_POSITION, VAR_TEMP_0, VAR_TEMP_1)
+    moveobjecttopos(1, VAR_TEMP_0, VAR_TEMP_1, 0)
+    return
+}
+
+script MovementTest_3{
+    moveobjecttopos(1, 14, 6, 0)
+    return
+}
+
+script MovementTest_4{
+    moveobjecttopos(1, 13, 12, 0)
+    return
+}
