@@ -25,7 +25,6 @@
 #define SECONDS(value) ((signed) (60.0 * value + 0.5))
 
 u16 *InitalizeInd();
-u32 abs();
 u32 distance();
 
 static const u32 MOVES_COUNT = 4;
@@ -46,7 +45,7 @@ int searchPath(struct ObjectEvent *objectEvent,s32 x, s32 y, s32 facing){
     Set explored;
     Node child;
     Node node;
-    u32 MapWidth = GetMapLayout()->width;
+    u32 MapWidth = GetMapLayout(gMapHeader.mapLayoutId)->width;
 
     u16 rangeX = objectEvent->rangeX;
     u16 rangeY = objectEvent->rangeY;

@@ -2,6 +2,7 @@
 #define GUARD_MOVEMENT_PATH_PLANNING_H
 #include "event_object_movement.h"
 #include "malloc.h"
+#include "gba/types.h"
 
 
 static const struct Coords16 moves[] = 
@@ -64,11 +65,11 @@ void swap(float *a, float *b) {
   *a = temp;
 }
 
-u32 abs(s32 x){
-    return (u32)((x<0)?-x:x);}
 
-u32 L1Distance(s32 x0, s32 y0, s32 xf, s32 yf){ //Manhatan distance used as heuristic
-    return abs(x0 - xf) + abs(y0 - yf);}
+u32 L1Distance(s32 x0, s32 y0, s32 xf, s32 yf) //Manhatan distance used as heuristic
+{
+  return abs(x0 - xf) + abs(y0 - yf);
+}
 
 float CalcHeuristic(struct Node *node, s32 xgoal,s32 ygoal)
 {

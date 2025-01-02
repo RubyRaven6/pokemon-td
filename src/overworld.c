@@ -569,6 +569,7 @@ const struct MapLayout *GetMapLayout(u16 mapLayoutId)
     return gMapLayouts[mapLayoutId - 1];
 }
 
+
 void ApplyCurrentWarp(void)
 {
     gLastUsedWarp = gSaveBlock1Ptr->location;
@@ -623,7 +624,7 @@ static void LoadCurrentMapData(void)
     sLastMapSectionId = gMapHeader.regionMapSectionId;
     gMapHeader = *Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
     gSaveBlock1Ptr->mapLayoutId = gMapHeader.mapLayoutId;
-    gMapHeader.mapLayout = GetMapLayout(gMapHeader.mapLayoutId);
+    gMapHeader.mapLayout = GetMapLayout(gMapHeader.mapLayoutId); //gMapHeader.mapLayout = GetMapLayout();
 }
 
 static void LoadSaveblockMapHeader(void)
