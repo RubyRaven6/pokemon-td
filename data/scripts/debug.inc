@@ -142,14 +142,17 @@ Debug_EventScript_Script_1::
 	end
 
 Debug_EventScript_Script_2::
+	call MovementTest_2
 	release
 	end
 
 Debug_EventScript_Script_3::
+	call MovementTest_3
 	release
 	end
 
 Debug_EventScript_Script_4::
+	call MovementTest_4
 	release
 	end
 

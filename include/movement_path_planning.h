@@ -32,8 +32,8 @@ static EWRAM_DATA u8 *SolutionPath = NULL;
 #define MAXPATH 200 // Max final path size
 #define MAXNODES 800 //Max size of the queues
 
-#define HEUR_WEIGHT 1
-//Weight of the Heuristic, 0 for Dijkstra Algoritmin (Uniform Cost Search), 1 for A*, and >>1 for Greedy Best First Search
+#define HEUR_WEIGHT 0
+//Weight of the Heuristic, 0 for Dijkstra Algorithm (Uniform Cost Search), 1 for A*, and >>1 for Greedy Best First Search
 
 typedef struct Node{
     int state;
@@ -45,13 +45,13 @@ typedef struct Node{
 
 typedef struct Set{
     unsigned int size;
-    int value[MAXNODES]; // PODEMOS REEMPLAZAR ESTAS LISTAS USANDO EL HEAP
+    int value[MAXNODES]; // WE CAN REPLACE THESE LISTS USING THE HEAP
 } Set;
 
 typedef struct PriorityQueue{
     unsigned int size;
-    float priority[MAXNODES]; // PODEMOS REEMPLAZAR ESTAS LISTAS USANDO EL HEAP
-    struct Node value[MAXNODES]; // PODEMOS REEMPLAZAR ESTAS LISTAS USANDO EL HEAP
+    float priority[MAXNODES]; // WE CAN REPLACE THESE LISTS USING THE HEAP
+    struct Node value[MAXNODES]; // WE CAN REPLACE THESE LISTS USING THE HEAP
 } PriorityQueue;
 
 void swapNode(struct Node *a, struct Node *b) {
