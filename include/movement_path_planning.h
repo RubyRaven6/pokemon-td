@@ -32,8 +32,8 @@ static EWRAM_DATA u8 *SolutionPath = NULL;
 #define MAXPATH 200 // Max final path size
 #define MAXNODES 800 //Max size of the queues
 
-#define HEUR_WEIGHT 0
-//Weight of the Heuristic, 0 for Dijkstra Algorithm (Uniform Cost Search), 1 for A*, and >>1 for Greedy Best First Search
+#define HEUR_WEIGHT 2
+//Weight of the Heuristic, 0 for Dijkstra Algorithm (Uniform Cost Search), 1 for A*, and >1 for Greedy Best First Search
 
 typedef struct Node{
     int state;
