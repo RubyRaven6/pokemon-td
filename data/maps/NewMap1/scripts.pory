@@ -27,7 +27,7 @@ script EventScript_PickMovements{
 }
 
 script MovementTest_1{
-    getobjectxy(OBJ_EVENT_ID_PLAYER, CURRENT_POSITION, VAR_TEMP_0, VAR_TEMP_1) // THIS DOESNT MOVE THE OBJECT RUBY, YOU DUMB BITCH
+    getplayerxy(VAR_TEMP_0, VAR_TEMP_1) // THIS DOESNT MOVE THE OBJECT RUBY, YOU DUMB BITCH
     addvar(VAR_TEMP_0, 1)
     addvar(VAR_TEMP_1, 1)
     moveobjecttopos(1, VAR_TEMP_0, VAR_TEMP_1, 0)

@@ -2444,6 +2444,8 @@
 			.2byte \targetfacing
 			map \map
 		.endif
+	.endm
+
 	.macro increasedifficulty
 	callnative Script_IncreaseDifficulty, requests_effects=1
 	.endm
