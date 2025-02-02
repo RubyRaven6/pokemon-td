@@ -42,7 +42,7 @@ SINGLE_BATTLE_TEST("Liquid Ooze causes Leech Seed users to lose HP instead of he
 DOUBLE_BATTLE_TEST("Liquid Ooze causes Matcha Gatcha users to lose HP instead of heal")
 {
     GIVEN {
-        ASSUME(gMovesInfo[MOVE_MATCHA_GOTCHA].effect == EFFECT_ABSORB);
+        ASSUME(GetMoveEffect(MOVE_MATCHA_GOTCHA) == EFFECT_ABSORB);
         PLAYER(SPECIES_WOBBUFFET) { HP(1); }
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_TENTACOOL) { Ability(ABILITY_LIQUID_OOZE); }
@@ -61,7 +61,7 @@ DOUBLE_BATTLE_TEST("Liquid Ooze causes Matcha Gatcha users to lose HP instead of
 DOUBLE_BATTLE_TEST("Liquid Ooze will faint Matcha Gatcha users if it deals enough damage")
 {
     GIVEN {
-        ASSUME(gMovesInfo[MOVE_MATCHA_GOTCHA].effect == EFFECT_ABSORB);
+        ASSUME(GetMoveEffect(MOVE_MATCHA_GOTCHA) == EFFECT_ABSORB);
         PLAYER(SPECIES_WOBBUFFET) { HP(1); }
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_TENTACOOL) { Ability(ABILITY_LIQUID_OOZE); }
@@ -105,6 +105,33 @@ SINGLE_BATTLE_TEST("Liquid Ooze causes Strength Sap users to lose HP instead of 
         }
     } THEN {
         EXPECT_EQ(lostHp, atkStat);
+    }
+}
+
+SINGLE_BATTLE_TEST("Liquid Ooze causes leech seedee to faint before seeder")
+{
+    KNOWN_FAILING; // Message fails
+    u16 ability;
+    PARAMETRIZE { ability = ABILITY_CLEAR_BODY; }
+    PARAMETRIZE { ability = ABILITY_LIQUID_OOZE; }
+    GIVEN {
+        PLAYER(SPECIES_BULBASAUR)   { HP(1); }
+        OPPONENT(SPECIES_TENTACOOL) { HP(1); Ability(ability); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_LEECH_SEED); }
+    } SCENE {
+        MESSAGE("Bulbasaur used Leech Seed!");
+        // Drain at end of turn
+        ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_LEECH_SEED_DRAIN, opponent);
+        if (ability != ABILITY_LIQUID_OOZE) {
+            MESSAGE("The opposing Tentacool's health is sapped by Leech Seed!");
+            MESSAGE("The opposing Tentacool fainted!");
+        } else {
+            ABILITY_POPUP(opponent, ABILITY_LIQUID_OOZE);
+            MESSAGE("Bulbasaur sucked up the liquid ooze!");
+            MESSAGE("The opposing Tentacool fainted!");
+            MESSAGE("Bulbasaur fainted!");
+        }
     }
 }
 

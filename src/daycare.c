@@ -33,7 +33,6 @@ static void ClearDaycareMonMail(struct DaycareMail *mail);
 static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *daycare);
 static void DaycarePrintMonInfo(u8 windowId, u32 daycareSlotId, u8 y);
 static u8 ModifyBreedingScoreForOvalCharm(u8 score);
-static u8 GetEggMoves(struct Pokemon *pokemon, u16 *eggMoves);
 static u16 GetEggSpecies(u16 species);
 
 // RAM buffers used to assist with BuildEggMoveset()
@@ -260,6 +259,13 @@ static void StorePokemonInDaycare(struct Pokemon *mon, struct DaycareMon *daycar
         TakeMailFromMon(mon);
     }
 
+    u32 newSpecies = GetFormChangeTargetSpecies(mon, FORM_CHANGE_DEPOSIT, 0);
+    if (newSpecies != GetMonData(mon, MON_DATA_SPECIES))
+    {
+        SetMonData(mon, MON_DATA_SPECIES, &newSpecies);
+        CalculateMonStats(mon);
+    }
+
     daycareMon->mon = mon->box;
     daycareMon->steps = 0;
     ZeroMonData(mon);
@@ -331,8 +337,8 @@ static void ApplyDaycareExperience(struct Pokemon *mon)
 
 static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
 {
-    u16 species;
-    u16 newSpecies;
+    u32 species;
+    u32 newSpecies;
     u32 experience;
     struct Pokemon pokemon;
 
@@ -341,7 +347,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
     BoxMonToMon(&daycareMon->mon, &pokemon);
 
     newSpecies = GetFormChangeTargetSpecies(&pokemon, FORM_CHANGE_WITHDRAW, 0);
-    if (newSpecies != SPECIES_NONE)
+    if (newSpecies != species)
     {
         SetMonData(&pokemon, MON_DATA_SPECIES, &newSpecies);
         CalculateMonStats(&pokemon);
@@ -751,7 +757,7 @@ static void InheritAbility(struct Pokemon *egg, struct BoxPokemon *father, struc
 
 // Counts the number of egg moves a Pokémon learns and stores the moves in
 // the given array.
-static u8 GetEggMoves(struct Pokemon *pokemon, u16 *eggMoves)
+u8 GetEggMoves(struct Pokemon *pokemon, u16 *eggMoves)
 {
     u16 numEggMoves;
     u16 species;
